@@ -1,0 +1,20 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+  datasource:
+    url: jdbc:postgresql://localhost:5432/calorie-counter-db
+    username: postgres
+    password: admin
+
+  banner:
+    location: banner.txt
+
+server:
+  port: 8081
+
+security:
+  jwt:
+    token:
+      secret-key: secret-key
+      expire-length: 300000
