@@ -6,3 +6,5 @@ Szerver: calorie-counter-db
 Felhasználó: postgres
 Jelszó: admin
 Adatbázis: calorie-counter-db
+
+docker-compose up

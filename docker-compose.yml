@@ -1,16 +1,32 @@
+volumes:
+  postgres_data:
+    driver: local
+
 services:
-  cc-db:
-    image: postgres
+  postgres:
+    image: postgres:14
+    volumes:
+      - ./initdb:/docker-entrypoint-initdb.d
+      - postgres_data:/var/lib/postgresql/data
     ports:
       - 5432:5432
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: admin
-      POSTGRES_DB: calorie-counter-db
+      PGDATA: /var/lib/postgresql/data/pgdata
 
-
-  adminer:
-    image: adminer
-    restart: always
+  keycloak:
+    image: jboss/keycloak:14
+    environment:
+      DB_VENDOR: postgres
+      DB_ADDR: postgres:5432
+      DB_DATABASE: keycloak_db
+      DB_SCHEMA: public
+      DB_USER: postgres
+      DB_PASSWORD: admin
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: admin
     ports:
       - 8080:8080
+    depends_on:
+      - postgres
