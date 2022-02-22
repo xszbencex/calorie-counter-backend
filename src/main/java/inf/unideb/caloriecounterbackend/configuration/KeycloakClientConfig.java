@@ -31,6 +31,7 @@ public class KeycloakClientConfig {
                 .serverUrl(authServerUrl)
                 .realm(realm)
                 .clientId(clientId)
+                .clientSecret(clientSecret)
                 .build();
     }
 

@@ -2,6 +2,9 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
   datasource:
     url: jdbc:postgresql://localhost:5432/calorie_counter_db
     username: postgres
@@ -18,3 +21,9 @@ keycloak:
   realm: MAG
   resource: login
   public-client: true
+
+cc:
+  keycloak:
+    client-id: login
+    client-secret: 745336ef-996d-4f3a-9484-4e8238273ebc
+
