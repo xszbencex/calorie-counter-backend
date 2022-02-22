@@ -32,12 +32,6 @@ public class KeycloakUserService {
         return this.realm;
     }
 
-    /**
-     * User keresése id alapján.
-     *
-     * @param userId - userId
-     * @return UserRepresentation
-     */
     public UserRepresentation getUserById(
             final String userId
     ) {

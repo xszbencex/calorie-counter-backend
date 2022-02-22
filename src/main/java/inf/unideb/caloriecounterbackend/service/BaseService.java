@@ -1,6 +1,11 @@
 package inf.unideb.caloriecounterbackend.service;
 
+import inf.unideb.caloriecounterbackend.dto.BaseDTO;
+import inf.unideb.caloriecounterbackend.entity.BaseEntity;
+
 import java.lang.reflect.Type;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.keycloak.KeycloakPrincipal;
 import org.modelmapper.ModelMapper;
@@ -9,16 +14,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
+
 @Service
-public class BaseService<D, E> {
+public class BaseService<D extends BaseDTO, E extends BaseEntity> {
 
-    private Type dtoClass;
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
+    private final Type dtoClass;
 
-    private Type entityClass;
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
+    private final Type entityClass;
 
     private ModelMapper modelMapper;
 
     public BaseService() {
+        this.dtoClass = BaseDTO.class;
+        this.entityClass = BaseEntity.class;
     }
 
     public BaseService(final Class<D> dtoClass, final Class<E> entityClass) {
@@ -50,5 +65,9 @@ public class BaseService<D, E> {
 
     public E mapFromDTO(final D dto) {
         return getModelMapper().map(dto, entityClass);
+    }
+
+    public List<D> mapEntityListToDTOList(final List<E> entities) {
+        return entities.stream().map(this::mapToDTO).collect(Collectors.toList());
     }
 }
