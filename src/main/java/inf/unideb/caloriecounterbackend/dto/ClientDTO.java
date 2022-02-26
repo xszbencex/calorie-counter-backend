@@ -19,16 +19,19 @@ import lombok.ToString;
 public class ClientDTO extends BaseDTO {
 
     @NotBlank
-    private Integer keycloakId;
+    private String keycloakId;
 
     @NotBlank
     private String name;
 
     @NotBlank
-    private Integer height;
+    private Short height;
 
     @NotBlank
-    private Integer weight;
+    private Short weight;
+
+    @NotBlank
+    private Short targetCalories;
 
     @NotNull
     private Instant birthDate;

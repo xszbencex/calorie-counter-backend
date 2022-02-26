@@ -34,13 +34,18 @@ public class ProductController {
         return this.productService.getAllProduct();
     }
 
+    @GetMapping("/user/{userId}")
+    public Result<List<ProductDTO>> getAllProductByUserId(@PathVariable final String userId) {
+        return this.productService.getAllProductByUserId(userId);
+    }
+
     @GetMapping("/{productId}")
     public Result<ProductDTO> getProductById(
             @PathVariable final String productId) {
         return this.productService.getProductById(productId);
     }
 
-    @PostMapping("/create")
+    @PostMapping
     public Result<ProductDTO> createProduct(
             @Valid @RequestBody final ProductDTO productDTO) {
         return this.productService.createProduct(productDTO);

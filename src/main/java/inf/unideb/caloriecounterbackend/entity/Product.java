@@ -19,7 +19,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @Entity
-@Table(name = "PRODUCT")
+@Table(name = "product")
 @Access(value = AccessType.FIELD)
 public class Product extends BaseEntity {
 
@@ -45,5 +45,11 @@ public class Product extends BaseEntity {
 
     @Column(name = "kcal", columnDefinition = "smallint not null default 0")
     private Short kcal;
+
+    @Column(name = "comment", columnDefinition = "text")
+    private String comment;
+
+    @Column(name = "user_id", nullable = false)
+    private String userId;
 
 }

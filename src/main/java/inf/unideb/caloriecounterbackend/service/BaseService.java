@@ -18,6 +18,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
+@Getter
 @Service
 public class BaseService<D extends BaseDTO, E extends BaseEntity> {
 
@@ -53,10 +54,6 @@ public class BaseService<D extends BaseDTO, E extends BaseEntity> {
     public void setModelMapper(final ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
         this.modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-    }
-
-    public ModelMapper getModelMapper() {
-        return this.modelMapper;
     }
 
     public D mapToDTO(final E entity) {

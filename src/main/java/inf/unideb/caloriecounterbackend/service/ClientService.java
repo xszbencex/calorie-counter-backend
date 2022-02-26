@@ -2,28 +2,44 @@ package inf.unideb.caloriecounterbackend.service;
 
 import inf.unideb.caloriecounterbackend.dto.ClientDTO;
 import inf.unideb.caloriecounterbackend.dto.Result;
+import inf.unideb.caloriecounterbackend.dto.WeightChangeDTO;
 import inf.unideb.caloriecounterbackend.entity.Client;
 import inf.unideb.caloriecounterbackend.exception.ApplicationError;
 import inf.unideb.caloriecounterbackend.repository.ClientRepository;
 
+import java.time.Instant;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import lombok.NoArgsConstructor;
+
 @Service
+@NoArgsConstructor
 public class ClientService extends BaseService<ClientDTO, Client> {
 
-    private final ClientRepository clientRepository;
+    private ClientRepository clientRepository;
+
+    private WeightChangeService weightChangeService;
 
     @Autowired
-    public ClientService(ClientRepository clientRepository) {
+    public ClientService(final ClientRepository clientRepository, final WeightChangeService weightChangeService) {
         super(ClientDTO.class, Client.class);
         this.clientRepository = clientRepository;
+        this.weightChangeService = weightChangeService;
     }
 
     public Result<ClientDTO> createClient(final ClientDTO clientDTO) {
         final Client client = super.mapFromDTO(clientDTO);
+        client.setId(null);
+
+        final WeightChangeDTO weightChangeDTO = new WeightChangeDTO();
+        weightChangeDTO.setUserId(super.getUserUuid());
+        weightChangeDTO.setWeight(client.getWeight());
+        weightChangeDTO.setSetDate(Instant.now());
+        this.weightChangeService.createWeightChange(weightChangeDTO);
+
         return new Result<>(super.mapToDTO(this.clientRepository.save(client)));
     }
 
@@ -36,6 +52,13 @@ public class ClientService extends BaseService<ClientDTO, Client> {
                 .map(super::mapToDTO)
                 .map(Result::new)
                 .orElseGet(() -> Result.error(ApplicationError.entityNotFound(Client.class.getSimpleName(), clientId)));
+    }
+
+    public Result<ClientDTO> getClientByUserId(final String userId) {
+        return this.clientRepository.findClientByKeycloakId(userId)
+                .map(super::mapToDTO)
+                .map(Result::new)
+                .orElseGet(() -> Result.error(ApplicationError.entityNotFound(Client.class.getSimpleName(), userId)));
     }
 
     public Result<ClientDTO> updateClient(final ClientDTO clientDTO, final String clientId) {

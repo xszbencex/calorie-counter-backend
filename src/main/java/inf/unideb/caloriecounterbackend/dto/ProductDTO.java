@@ -36,4 +36,9 @@ public class ProductDTO extends BaseDTO {
 
     @NotBlank
     private Short kcal;
+
+    private String comment;
+
+    private String userId;
+
 }

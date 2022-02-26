@@ -11,24 +11,32 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import lombok.NoArgsConstructor;
+
 @Service
+@NoArgsConstructor
 public class NutritionService extends BaseService<NutritionDTO, Nutrition> {
 
-    private final NutritionRepository nutritionRepository;
+    private NutritionRepository nutritionRepository;
 
     @Autowired
-    public NutritionService(NutritionRepository nutritionRepository) {
+    public NutritionService(final NutritionRepository nutritionRepository) {
         super(NutritionDTO.class, Nutrition.class);
         this.nutritionRepository = nutritionRepository;
     }
 
     public Result<NutritionDTO> createNutrition(final NutritionDTO nutritionDTO) {
         final Nutrition nutrition = super.mapFromDTO(nutritionDTO);
+        nutrition.setId(null);
         return new Result<>(super.mapToDTO(this.nutritionRepository.save(nutrition)));
     }
 
     public Result<List<NutritionDTO>> getAllNutrition() {
         return new Result<>(super.mapEntityListToDTOList(this.nutritionRepository.findAll()));
+    }
+
+    public Result<List<NutritionDTO>> getAllNutritionByUserId(final String userId) {
+        return new Result<>(super.mapEntityListToDTOList(this.nutritionRepository.findAllByUserId(userId)));
     }
 
     public Result<NutritionDTO> getNutritionById(final String nutritionId) {

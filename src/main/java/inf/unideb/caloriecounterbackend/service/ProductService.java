@@ -11,24 +11,32 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import lombok.NoArgsConstructor;
+
 @Service
+@NoArgsConstructor
 public class ProductService extends BaseService<ProductDTO, Product> {
 
-    private final ProductRepository productRepository;
+    private ProductRepository productRepository;
 
     @Autowired
-    public ProductService(ProductRepository productRepository) {
+    public ProductService(final ProductRepository productRepository) {
         super(ProductDTO.class, Product.class);
         this.productRepository = productRepository;
     }
 
     public Result<ProductDTO> createProduct(final ProductDTO productDTO) {
         final Product product = super.mapFromDTO(productDTO);
+        product.setId(null);
         return new Result<>(super.mapToDTO(this.productRepository.save(product)));
     }
 
     public Result<List<ProductDTO>> getAllProduct() {
         return new Result<>(super.mapEntityListToDTOList(this.productRepository.findAll()));
+    }
+
+    public Result<List<ProductDTO>> getAllProductByUserId(final String userId) {
+        return new Result<>(super.mapEntityListToDTOList(this.productRepository.findAllByUserId(userId)));
     }
 
     public Result<ProductDTO> getProductById(final String productId) {

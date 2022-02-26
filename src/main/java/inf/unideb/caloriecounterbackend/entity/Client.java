@@ -20,21 +20,24 @@ import lombok.ToString;
 @Setter
 @ToString
 @Entity
-@Table(name = "CLIENT")
+@Table(name = "client")
 @Access(value = AccessType.FIELD)
 public class Client extends BaseEntity {
 
     @Column(name = "keycloak_id", nullable = false, unique = true)
-    private Integer keycloakId;
+    private String keycloakId;
 
     @Column(name = "name", nullable = false)
     private String name;
 
     @Column(name = "height", nullable = false)
-    private Integer height;
+    private Short height;
 
     @Column(name = "weight", nullable = false)
-    private Integer weight;
+    private Short weight;
+
+    @Column(name = "target_calories", nullable = false)
+    private Short targetCalories;
 
     @Column(name = "birth_date", nullable = false)
     private Instant birthDate;

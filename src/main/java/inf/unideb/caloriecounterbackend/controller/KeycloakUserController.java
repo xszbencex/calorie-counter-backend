@@ -13,7 +13,6 @@ import org.keycloak.representations.idm.UserRepresentation;
 
 @RestController
 @RequestMapping(path = "/users")
-@CrossOrigin(origins = "http://localhost:3000")
 public class KeycloakUserController {
 
     private final KeycloakUserService keycloakUserService;

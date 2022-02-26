@@ -40,7 +40,13 @@ public class ClientController {
         return this.clientService.getClientById(clientId);
     }
 
-    @PostMapping("/create")
+    @GetMapping("/user/{userId}")
+    public Result<ClientDTO> getClientByUserId(
+            @PathVariable final String userId) {
+        return this.clientService.getClientByUserId(userId);
+    }
+
+    @PostMapping
     public Result<ClientDTO> createClient(
             @Valid @RequestBody final ClientDTO clientDTO) {
         return this.clientService.createClient(clientDTO);

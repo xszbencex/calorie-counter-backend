@@ -18,12 +18,28 @@ import lombok.ToString;
 @ToString
 public class NutritionDTO extends BaseDTO {
 
-    @NotNull
-    private Product product;
-
     @NotBlank
-    private Short quantity;
+    private String userId;
 
     @NotNull
     private Instant nutritionDate;
+
+    @NotBlank
+    private Short carbohydrate;
+
+    @NotBlank
+    private Short protein;
+
+    @NotBlank
+    private Short fat;
+
+    @NotBlank
+    private Short kcal;
+
+    private Product product;
+
+    private Short quantity;
+
+    private String comment;
+
 }

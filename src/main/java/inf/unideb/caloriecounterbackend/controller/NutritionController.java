@@ -34,13 +34,18 @@ public class NutritionController {
         return this.nutritionService.getAllNutrition();
     }
 
+    @GetMapping("user/{userId}")
+    public Result<List<NutritionDTO>> getAllNutritionByUserId(@PathVariable final String userId) {
+        return this.nutritionService.getAllNutritionByUserId(userId);
+    }
+
     @GetMapping("/{nutritionId}")
     public Result<NutritionDTO> getNutritionById(
             @PathVariable final String nutritionId) {
         return this.nutritionService.getNutritionById(nutritionId);
     }
 
-    @PostMapping("/create")
+    @PostMapping
     public Result<NutritionDTO> createNutrition(
             @Valid @RequestBody final NutritionDTO nutritionDTO) {
         return this.nutritionService.createNutrition(nutritionDTO);
