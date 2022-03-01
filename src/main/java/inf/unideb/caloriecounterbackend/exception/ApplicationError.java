@@ -45,11 +45,9 @@ public class ApplicationError {
     private String title;
     private String message;
 
-    public static final String ERROR_PREFIX = "Calorie-Counter-";
-
-    public static final String ENTITY_NOT_FOUND = ERROR_PREFIX + "201";
-    public static final String ENTITY_ALREADY_EXISTS = ERROR_PREFIX + "202";
-    public static final String ERROR_DURING_SAVE = ERROR_PREFIX + "203";
+    public static final String ENTITY_NOT_FOUND = "201";
+    public static final String ENTITY_ALREADY_EXISTS = "202";
+    public static final String ERROR_DURING_SAVE = "203";
 
     static {
         TITLES.put(EC_GENERIC_ERROR, TITLE);

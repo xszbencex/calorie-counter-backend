@@ -21,24 +21,22 @@ public class ClientService extends BaseService<ClientDTO, Client> {
 
     private ClientRepository clientRepository;
 
-    private WeightChangeService weightChangeService;
-
     @Autowired
-    public ClientService(final ClientRepository clientRepository, final WeightChangeService weightChangeService) {
+    public ClientService(final ClientRepository clientRepository) {
         super(ClientDTO.class, Client.class);
         this.clientRepository = clientRepository;
-        this.weightChangeService = weightChangeService;
     }
 
     public Result<ClientDTO> createClient(final ClientDTO clientDTO) {
         final Client client = super.mapFromDTO(clientDTO);
         client.setId(null);
+        client.setKeycloakId(super.getUserUuid());
 
         final WeightChangeDTO weightChangeDTO = new WeightChangeDTO();
         weightChangeDTO.setUserId(super.getUserUuid());
         weightChangeDTO.setWeight(client.getWeight());
         weightChangeDTO.setSetDate(Instant.now());
-        this.weightChangeService.createWeightChange(weightChangeDTO);
+        super.getWeightChangeService().createWeightChange(weightChangeDTO);
 
         return new Result<>(super.mapToDTO(this.clientRepository.save(client)));
     }

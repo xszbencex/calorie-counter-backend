@@ -1,10 +1,6 @@
 # calorie-counter-backend
 Backend for my calorie counter app for my thesis.
 
-Adatbázis: PostgreSQL
-Szerver: calorie-counter-db
-Felhasználó: postgres
-Jelszó: admin
-Adatbázis: calorie-counter-db
-
 docker-compose up
+
+docker exec -i cc-postgres psql -U postgres -d keycloak_db < ./keycloak_backup.sql

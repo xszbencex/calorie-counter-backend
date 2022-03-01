@@ -32,6 +32,14 @@ public class BaseService<D extends BaseDTO, E extends BaseEntity> {
 
     private ModelMapper modelMapper;
 
+    private ClientService clientService;
+
+    private NutritionService nutritionService;
+
+    private ProductService productService;
+
+    private WeightChangeService weightChangeService;
+
     public BaseService() {
         this.dtoClass = BaseDTO.class;
         this.entityClass = BaseEntity.class;
@@ -66,5 +74,25 @@ public class BaseService<D extends BaseDTO, E extends BaseEntity> {
 
     public List<D> mapEntityListToDTOList(final List<E> entities) {
         return entities.stream().map(this::mapToDTO).collect(Collectors.toList());
+    }
+
+    @Autowired
+    public void setClientService(ClientService clientService) {
+        this.clientService = clientService;
+    }
+
+    @Autowired
+    public void setNutritionService(NutritionService nutritionService) {
+        this.nutritionService = nutritionService;
+    }
+
+    @Autowired
+    public void setProductService(ProductService productService) {
+        this.productService = productService;
+    }
+
+    @Autowired
+    public void setWeightChangeService(WeightChangeService weightChangeService) {
+        this.weightChangeService = weightChangeService;
     }
 }

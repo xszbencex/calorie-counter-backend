@@ -4,6 +4,7 @@ volumes:
 
 services:
   postgres:
+    container_name: cc-postgres
     image: postgres:14
     volumes:
       - ./initdb:/docker-entrypoint-initdb.d
@@ -16,7 +17,8 @@ services:
       PGDATA: /var/lib/postgresql/data/pgdata
 
   keycloak:
-    image: jboss/keycloak:14
+    container_name: cc-keycloak
+    image: jboss/keycloak:14.0.0
     environment:
       DB_VENDOR: postgres
       DB_ADDR: postgres:5432
