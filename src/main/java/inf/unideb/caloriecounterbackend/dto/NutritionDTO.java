@@ -3,6 +3,7 @@ package inf.unideb.caloriecounterbackend.dto;
 import inf.unideb.caloriecounterbackend.entity.Product;
 
 import java.time.Instant;
+import java.util.Date;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
@@ -22,7 +23,7 @@ public class NutritionDTO extends BaseDTO {
     private String userId;
 
     @NotNull
-    private Instant nutritionDate;
+    private Date nutritionDate;
 
     @NotBlank
     private Short carbohydrate;
@@ -34,7 +35,7 @@ public class NutritionDTO extends BaseDTO {
     private Short fat;
 
     @NotBlank
-    private Short kcal;
+    private Short calorie;
 
     private Product product;
 

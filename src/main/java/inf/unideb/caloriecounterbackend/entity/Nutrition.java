@@ -1,6 +1,7 @@
 package inf.unideb.caloriecounterbackend.entity;
 
 import java.time.Instant;
+import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
@@ -9,6 +10,8 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -25,8 +28,9 @@ public class Nutrition extends BaseEntity {
     @Column(name = "user_id", nullable = false)
     private String userId;
 
-    @Column(name = "nutrition_date", columnDefinition = "timestamp(6) not null default current_timestamp(6)")
-    private Instant nutritionDate;
+    @Column(name = "nutrition_date")
+    @Temporal(TemporalType.DATE)
+    private Date nutritionDate;
 
     @Column(name = "carbohydrate", columnDefinition = "smallint not null default 0")
     private Short carbohydrate;
@@ -37,8 +41,8 @@ public class Nutrition extends BaseEntity {
     @Column(name = "fat", columnDefinition = "smallint not null default 0")
     private Short fat;
 
-    @Column(name = "kcal", columnDefinition = "smallint not null default 0")
-    private Short kcal;
+    @Column(name = "calorie", columnDefinition = "smallint not null default 0")
+    private Short calorie;
 
     @ManyToOne
     @JoinColumn(name = "product_id")

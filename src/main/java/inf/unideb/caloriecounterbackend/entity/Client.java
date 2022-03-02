@@ -39,6 +39,15 @@ public class Client extends BaseEntity {
     @Column(name = "target_calories", nullable = false)
     private Short targetCalories;
 
+    @Column(name = "target_carbohydate")
+    private Short targetCarbohydrate;
+
+    @Column(name = "target_protein")
+    private Short targetProtein;
+
+    @Column(name = "target_fat")
+    private Short targetFat;
+
     @Column(name = "birth_date", nullable = false)
     private Instant birthDate;
 

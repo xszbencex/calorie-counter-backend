@@ -2,8 +2,10 @@ package inf.unideb.caloriecounterbackend.controller;
 
 import inf.unideb.caloriecounterbackend.dto.NutritionDTO;
 import inf.unideb.caloriecounterbackend.dto.Result;
+import inf.unideb.caloriecounterbackend.dto.response.NutritionSumResponse;
 import inf.unideb.caloriecounterbackend.service.NutritionService;
 
+import java.time.Instant;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -43,6 +45,12 @@ public class NutritionController {
     public Result<NutritionDTO> getNutritionById(
             @PathVariable final String nutritionId) {
         return this.nutritionService.getNutritionById(nutritionId);
+    }
+
+    @GetMapping("/sum/{nutritionDate}")
+    public Result<NutritionSumResponse> getNutritionSumByDate(
+            @PathVariable final Instant nutritionDate) {
+        return this.nutritionService.getNutritionSumByDate(nutritionDate);
     }
 
     @PostMapping

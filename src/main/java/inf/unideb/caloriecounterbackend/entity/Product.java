@@ -43,8 +43,8 @@ public class Product extends BaseEntity {
     @Column(name = "fat", columnDefinition = "smallint not null default 0")
     private Byte fat;
 
-    @Column(name = "kcal", columnDefinition = "smallint not null default 0")
-    private Short kcal;
+    @Column(name = "calorie", columnDefinition = "smallint not null default 0")
+    private Short calorie;
 
     @Column(name = "comment", columnDefinition = "text")
     private String comment;

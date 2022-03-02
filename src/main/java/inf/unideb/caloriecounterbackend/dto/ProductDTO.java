@@ -35,7 +35,7 @@ public class ProductDTO extends BaseDTO {
     private Byte fat;
 
     @NotBlank
-    private Short kcal;
+    private Short calorie;
 
     private String comment;
 

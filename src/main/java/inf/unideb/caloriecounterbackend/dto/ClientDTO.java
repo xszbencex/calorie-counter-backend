@@ -33,6 +33,12 @@ public class ClientDTO extends BaseDTO {
     @NotBlank
     private Short targetCalories;
 
+    private Short targetCarbohydrate;
+
+    private Short targetProtein;
+
+    private Short targetFat;
+
     @NotNull
     private Instant birthDate;
 

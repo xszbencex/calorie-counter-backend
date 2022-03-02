@@ -2,10 +2,20 @@ package inf.unideb.caloriecounterbackend.service;
 
 import inf.unideb.caloriecounterbackend.dto.NutritionDTO;
 import inf.unideb.caloriecounterbackend.dto.Result;
+import inf.unideb.caloriecounterbackend.dto.response.NutritionSumResponse;
 import inf.unideb.caloriecounterbackend.entity.Nutrition;
 import inf.unideb.caloriecounterbackend.exception.ApplicationError;
 import inf.unideb.caloriecounterbackend.repository.NutritionRepository;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalAccessor;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +38,7 @@ public class NutritionService extends BaseService<NutritionDTO, Nutrition> {
     public Result<NutritionDTO> createNutrition(final NutritionDTO nutritionDTO) {
         final Nutrition nutrition = super.mapFromDTO(nutritionDTO);
         nutrition.setId(null);
+        nutrition.setUserId(super.getUserUuid());
         return new Result<>(super.mapToDTO(this.nutritionRepository.save(nutrition)));
     }
 
@@ -44,6 +55,16 @@ public class NutritionService extends BaseService<NutritionDTO, Nutrition> {
                 .map(super::mapToDTO)
                 .map(Result::new)
                 .orElseGet(() -> Result.error(ApplicationError.entityNotFound(Nutrition.class.getSimpleName(), nutritionId)));
+    }
+
+    public Result<NutritionSumResponse> getNutritionSumByDate(final Instant nutritionDate) {
+        final List<Nutrition> nutritionList = this.nutritionRepository.findAllByNutritionDate(Date.from(nutritionDate));
+        final NutritionSumResponse response = new NutritionSumResponse();
+        response.setCarbohydrateSum(nutritionList.stream().mapToInt(Nutrition::getCarbohydrate).sum());
+        response.setProteinSum(nutritionList.stream().mapToInt(Nutrition::getProtein).sum());
+        response.setFatSum(nutritionList.stream().mapToInt(Nutrition::getFat).sum());
+        response.setCalorieSum(nutritionList.stream().mapToInt(Nutrition::getCalorie).sum());
+        return new Result<>(response);
     }
 
     public Result<NutritionDTO> updateNutrition(final NutritionDTO nutritionDTO, final String nutritionId) {
