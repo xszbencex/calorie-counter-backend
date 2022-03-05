@@ -1,8 +1,9 @@
 package inf.unideb.caloriecounterbackend.dto;
 
-import java.time.Instant;
+import java.util.Date;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -14,9 +15,11 @@ import lombok.ToString;
 @Valid
 public class WeightChangeDTO extends BaseDTO {
 
-    private Short weight;
+    @NotBlank
+    private Float weight;
 
-    private Instant setDate;
+    @NotBlank
+    private Date setDate;
 
     private String userId;
 }

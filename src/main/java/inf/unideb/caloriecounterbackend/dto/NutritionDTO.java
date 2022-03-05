@@ -2,7 +2,6 @@ package inf.unideb.caloriecounterbackend.dto;
 
 import inf.unideb.caloriecounterbackend.entity.Product;
 
-import java.time.Instant;
 import java.util.Date;
 
 import javax.validation.Valid;
@@ -19,20 +18,19 @@ import lombok.ToString;
 @ToString
 public class NutritionDTO extends BaseDTO {
 
-    @NotBlank
     private String userId;
 
     @NotNull
     private Date nutritionDate;
 
     @NotBlank
-    private Short carbohydrate;
+    private Float carbohydrate;
 
     @NotBlank
-    private Short protein;
+    private Float protein;
 
     @NotBlank
-    private Short fat;
+    private Float fat;
 
     @NotBlank
     private Short calorie;

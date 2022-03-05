@@ -49,6 +49,8 @@ public class ApplicationError {
     public static final String ENTITY_ALREADY_EXISTS = "202";
     public static final String ERROR_DURING_SAVE = "203";
 
+    public static final String NOT_MATCHING_USER_ID = "301";
+
     static {
         TITLES.put(EC_GENERIC_ERROR, TITLE);
         TITLES.put(VALIDATION_ERROR, VALIDATION_ERROR_TITLE);
@@ -59,6 +61,7 @@ public class ApplicationError {
         TITLES.put(ENTITY_NOT_FOUND, TITLE);
         TITLES.put(ENTITY_ALREADY_EXISTS, TITLE);
         TITLES.put(ERROR_DURING_SAVE, TITLE);
+        TITLES.put(NOT_MATCHING_USER_ID, TITLE);
 
         MESSAGE_TEMPLATES.put(EC_GENERIC_ERROR, "Ismeretlen hiba.");
         MESSAGE_TEMPLATES.put(VALIDATION_ERROR, "Validációs hibák: {0}");
@@ -69,6 +72,8 @@ public class ApplicationError {
         MESSAGE_TEMPLATES.put(ENTITY_NOT_FOUND, "Nem található {0} entitás a megadott ID-val: {1}");
         MESSAGE_TEMPLATES.put(ENTITY_ALREADY_EXISTS, "Az entitás már létezik.");
         MESSAGE_TEMPLATES.put(ERROR_DURING_SAVE, "Hiba a(z) {0} entitás mentése közben.");
+
+        MESSAGE_TEMPLATES.put(NOT_MATCHING_USER_ID, "Csak a saját elemeit módosíthatja/törölheti.");
     }
 
     public ApplicationError() {
@@ -136,6 +141,10 @@ public class ApplicationError {
 
     public static ApplicationError entityAlreadyExists() {
         return new ApplicationError(ENTITY_ALREADY_EXISTS);
+    }
+
+    public static ApplicationError notMatchingUserId() {
+        return new ApplicationError(NOT_MATCHING_USER_ID);
     }
 
 }

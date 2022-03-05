@@ -35,13 +35,13 @@ public class Product extends BaseEntity {
     private UnitOfMeasure unitOfMeasure;
 
     @Column(name = "carbohydrate", columnDefinition = "smallint not null default 0")
-    private Byte carbohydrate;
+    private Float carbohydrate;
 
     @Column(name = "protein", columnDefinition = "smallint not null default 0")
-    private Byte protein;
+    private Float protein;
 
     @Column(name = "fat", columnDefinition = "smallint not null default 0")
-    private Byte fat;
+    private Float fat;
 
     @Column(name = "calorie", columnDefinition = "smallint not null default 0")
     private Short calorie;
@@ -49,7 +49,7 @@ public class Product extends BaseEntity {
     @Column(name = "comment", columnDefinition = "text")
     private String comment;
 
-    @Column(name = "user_id", nullable = false)
+    @Column(name = "user_id", nullable = false, updatable = false)
     private String userId;
 
 }

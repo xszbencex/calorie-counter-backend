@@ -30,7 +30,15 @@ public class WeightChangeService extends BaseService<WeightChangeDTO, WeightChan
     public Result<WeightChangeDTO> createWeightChange(final WeightChangeDTO weightChangeDTO) {
         final WeightChange weightChange = super.mapFromDTO(weightChangeDTO);
         weightChange.setId(null);
+        weightChange.setUserId(super.getUserUuid());
         return new Result<>(super.mapToDTO(this.weightChangeRepository.save(weightChange)));
+    }
+
+    public Result<WeightChangeDTO> getWeightChangeById(final String weightChangeId) {
+        return this.weightChangeRepository.findById(weightChangeId)
+                .map(super::mapToDTO)
+                .map(Result::new)
+                .orElseGet(() -> Result.error(ApplicationError.entityNotFound(WeightChange.class.getSimpleName(), weightChangeId)));
     }
 
     public Result<List<WeightChangeDTO>> getAllWeightChangeByUserId(final String userId) {
@@ -48,6 +56,10 @@ public class WeightChangeService extends BaseService<WeightChangeDTO, WeightChan
     public Result<WeightChangeDTO> updateWeightChange(final WeightChangeDTO weightChangeDTO, final String weightChangeId) {
         return this.weightChangeRepository.findById(weightChangeId)
                 .map(updatedWeightChange -> {
+                    if (!updatedWeightChange.getUserId().equals(super.getUserUuid())) {
+                        throw new ApplicationException(ApplicationError.notMatchingUserId());
+                    }
+                    weightChangeDTO.setUserId(updatedWeightChange.getUserId());
                     updatedWeightChange = super.mapFromDTO(weightChangeDTO);
                     updatedWeightChange.setId(weightChangeId);
                     return super.mapToDTO(this.weightChangeRepository.save(updatedWeightChange));
@@ -57,7 +69,11 @@ public class WeightChangeService extends BaseService<WeightChangeDTO, WeightChan
     }
 
     public Result<Void> deleteWeightChange(final String weightChangeId) {
-        this.weightChangeRepository.deleteById(weightChangeId);
-        return Result.ok();
+        if (this.weightChangeRepository.findById(weightChangeId).orElseThrow().getUserId().equals(super.getUserUuid())) {
+            this.weightChangeRepository.deleteById(weightChangeId);
+            return Result.ok();
+        } else {
+            return Result.error(ApplicationError.notMatchingUserId());
+        }
     }
 }

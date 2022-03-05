@@ -2,7 +2,7 @@ package inf.unideb.caloriecounterbackend.dto;
 
 import inf.unideb.caloriecounterbackend.dto.enums.Gender;
 
-import java.time.Instant;
+import java.util.Date;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
@@ -18,17 +18,13 @@ import lombok.ToString;
 @ToString
 public class ClientDTO extends BaseDTO {
 
-    @NotBlank
     private String keycloakId;
-
-    @NotBlank
-    private String name;
 
     @NotBlank
     private Short height;
 
     @NotBlank
-    private Short weight;
+    private Float weight;
 
     @NotBlank
     private Short targetCalories;
@@ -40,7 +36,7 @@ public class ClientDTO extends BaseDTO {
     private Short targetFat;
 
     @NotNull
-    private Instant birthDate;
+    private Date birthDate;
 
     @NotBlank
     private Gender gender;

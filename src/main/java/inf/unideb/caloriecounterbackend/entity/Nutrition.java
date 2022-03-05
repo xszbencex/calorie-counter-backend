@@ -1,6 +1,5 @@
 package inf.unideb.caloriecounterbackend.entity;
 
-import java.time.Instant;
 import java.util.Date;
 
 import javax.persistence.Access;
@@ -25,7 +24,7 @@ import lombok.ToString;
 @Access(value = AccessType.FIELD)
 public class Nutrition extends BaseEntity {
 
-    @Column(name = "user_id", nullable = false)
+    @Column(name = "user_id", nullable = false, updatable = false)
     private String userId;
 
     @Column(name = "nutrition_date")
@@ -33,13 +32,13 @@ public class Nutrition extends BaseEntity {
     private Date nutritionDate;
 
     @Column(name = "carbohydrate", columnDefinition = "smallint not null default 0")
-    private Short carbohydrate;
+    private Float carbohydrate;
 
     @Column(name = "protein", columnDefinition = "smallint not null default 0")
-    private Short protein;
+    private Float protein;
 
     @Column(name = "fat", columnDefinition = "smallint not null default 0")
-    private Short fat;
+    private Float fat;
 
     @Column(name = "calorie", columnDefinition = "smallint not null default 0")
     private Short calorie;

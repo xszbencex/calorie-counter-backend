@@ -5,7 +5,7 @@ import inf.unideb.caloriecounterbackend.dto.Result;
 import inf.unideb.caloriecounterbackend.dto.response.NutritionSumResponse;
 import inf.unideb.caloriecounterbackend.service.NutritionService;
 
-import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -49,7 +49,7 @@ public class NutritionController {
 
     @GetMapping("/sum/{nutritionDate}")
     public Result<NutritionSumResponse> getNutritionSumByDate(
-            @PathVariable final Instant nutritionDate) {
+            @PathVariable final Date nutritionDate) {
         return this.nutritionService.getNutritionSumByDate(nutritionDate);
     }
 

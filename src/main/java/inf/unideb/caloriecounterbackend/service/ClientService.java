@@ -5,9 +5,10 @@ import inf.unideb.caloriecounterbackend.dto.Result;
 import inf.unideb.caloriecounterbackend.dto.WeightChangeDTO;
 import inf.unideb.caloriecounterbackend.entity.Client;
 import inf.unideb.caloriecounterbackend.exception.ApplicationError;
+import inf.unideb.caloriecounterbackend.exception.ApplicationException;
 import inf.unideb.caloriecounterbackend.repository.ClientRepository;
 
-import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,9 +34,8 @@ public class ClientService extends BaseService<ClientDTO, Client> {
         client.setKeycloakId(super.getUserUuid());
 
         final WeightChangeDTO weightChangeDTO = new WeightChangeDTO();
-        weightChangeDTO.setUserId(super.getUserUuid());
         weightChangeDTO.setWeight(client.getWeight());
-        weightChangeDTO.setSetDate(Instant.now());
+        weightChangeDTO.setSetDate(new Date());
         super.getWeightChangeService().createWeightChange(weightChangeDTO);
 
         return new Result<>(super.mapToDTO(this.clientRepository.save(client)));
@@ -62,6 +62,10 @@ public class ClientService extends BaseService<ClientDTO, Client> {
     public Result<ClientDTO> updateClient(final ClientDTO clientDTO, final String clientId) {
         return this.clientRepository.findById(clientId)
                 .map(updatedClient -> {
+                    if (!updatedClient.getKeycloakId().equals(super.getUserUuid())) {
+                        throw new ApplicationException(ApplicationError.notMatchingUserId());
+                    }
+                    clientDTO.setKeycloakId(updatedClient.getKeycloakId());
                     updatedClient = super.mapFromDTO(clientDTO);
                     updatedClient.setId(clientId);
                     return super.mapToDTO(this.clientRepository.save(updatedClient));
@@ -71,8 +75,12 @@ public class ClientService extends BaseService<ClientDTO, Client> {
     }
 
     public Result<Void> deleteClient(final String clientId) {
-        this.clientRepository.deleteById(clientId);
-        return Result.ok();
+        if (this.clientRepository.findById(clientId).orElseThrow().getKeycloakId().equals(super.getUserUuid())) {
+            this.clientRepository.deleteById(clientId);
+            return Result.ok();
+        } else {
+            return Result.error(ApplicationError.notMatchingUserId());
+        }
     }
 
 }

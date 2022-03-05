@@ -5,16 +5,9 @@ import inf.unideb.caloriecounterbackend.dto.Result;
 import inf.unideb.caloriecounterbackend.dto.response.NutritionSumResponse;
 import inf.unideb.caloriecounterbackend.entity.Nutrition;
 import inf.unideb.caloriecounterbackend.exception.ApplicationError;
+import inf.unideb.caloriecounterbackend.exception.ApplicationException;
 import inf.unideb.caloriecounterbackend.repository.NutritionRepository;
 
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalAccessor;
 import java.util.Date;
 import java.util.List;
 
@@ -57,12 +50,12 @@ public class NutritionService extends BaseService<NutritionDTO, Nutrition> {
                 .orElseGet(() -> Result.error(ApplicationError.entityNotFound(Nutrition.class.getSimpleName(), nutritionId)));
     }
 
-    public Result<NutritionSumResponse> getNutritionSumByDate(final Instant nutritionDate) {
-        final List<Nutrition> nutritionList = this.nutritionRepository.findAllByNutritionDate(Date.from(nutritionDate));
+    public Result<NutritionSumResponse> getNutritionSumByDate(final Date nutritionDate) {
+        final List<Nutrition> nutritionList = this.nutritionRepository.findAllByNutritionDate(nutritionDate);
         final NutritionSumResponse response = new NutritionSumResponse();
-        response.setCarbohydrateSum(nutritionList.stream().mapToInt(Nutrition::getCarbohydrate).sum());
-        response.setProteinSum(nutritionList.stream().mapToInt(Nutrition::getProtein).sum());
-        response.setFatSum(nutritionList.stream().mapToInt(Nutrition::getFat).sum());
+        response.setCarbohydrateSum((float) nutritionList.stream().mapToDouble(Nutrition::getCarbohydrate).sum());
+        response.setProteinSum((float) nutritionList.stream().mapToDouble(Nutrition::getProtein).sum());
+        response.setFatSum((float) nutritionList.stream().mapToDouble(Nutrition::getFat).sum());
         response.setCalorieSum(nutritionList.stream().mapToInt(Nutrition::getCalorie).sum());
         return new Result<>(response);
     }
@@ -70,6 +63,10 @@ public class NutritionService extends BaseService<NutritionDTO, Nutrition> {
     public Result<NutritionDTO> updateNutrition(final NutritionDTO nutritionDTO, final String nutritionId) {
         return this.nutritionRepository.findById(nutritionId)
                 .map(updatedNutrition -> {
+                    if (!updatedNutrition.getUserId().equals(super.getUserUuid())) {
+                        throw new ApplicationException(ApplicationError.notMatchingUserId());
+                    }
+                    nutritionDTO.setUserId(updatedNutrition.getUserId());
                     updatedNutrition = super.mapFromDTO(nutritionDTO);
                     updatedNutrition.setId(nutritionId);
                     return super.mapToDTO(this.nutritionRepository.save(updatedNutrition));
@@ -79,8 +76,12 @@ public class NutritionService extends BaseService<NutritionDTO, Nutrition> {
     }
 
     public Result<Void> deleteNutrition(final String nutritionId) {
-        this.nutritionRepository.deleteById(nutritionId);
-        return Result.ok();
+        if (this.nutritionRepository.findById(nutritionId).orElseThrow().getUserId().equals(super.getUserUuid())) {
+            this.nutritionRepository.deleteById(nutritionId);
+            return Result.ok();
+        } else {
+            return Result.error(ApplicationError.notMatchingUserId());
+        }
     }
 
 }

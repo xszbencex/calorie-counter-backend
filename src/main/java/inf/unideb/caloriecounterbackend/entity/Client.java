@@ -2,7 +2,7 @@ package inf.unideb.caloriecounterbackend.entity;
 
 import inf.unideb.caloriecounterbackend.dto.enums.Gender;
 
-import java.time.Instant;
+import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
@@ -11,6 +11,8 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -24,17 +26,14 @@ import lombok.ToString;
 @Access(value = AccessType.FIELD)
 public class Client extends BaseEntity {
 
-    @Column(name = "keycloak_id", nullable = false, unique = true)
+    @Column(name = "keycloak_id", nullable = false, unique = true, updatable = false)
     private String keycloakId;
-
-    @Column(name = "name", nullable = false)
-    private String name;
 
     @Column(name = "height", nullable = false)
     private Short height;
 
     @Column(name = "weight", nullable = false)
-    private Short weight;
+    private Float weight;
 
     @Column(name = "target_calories", nullable = false)
     private Short targetCalories;
@@ -49,7 +48,8 @@ public class Client extends BaseEntity {
     private Short targetFat;
 
     @Column(name = "birth_date", nullable = false)
-    private Instant birthDate;
+    @Temporal(TemporalType.DATE)
+    private Date birthDate;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "gender", nullable = false)

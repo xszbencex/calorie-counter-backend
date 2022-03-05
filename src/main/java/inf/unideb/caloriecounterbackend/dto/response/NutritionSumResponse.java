@@ -12,11 +12,11 @@ import lombok.ToString;
 @Valid
 public class NutritionSumResponse {
 
-    private Integer carbohydrateSum;
+    private Float carbohydrateSum;
 
-    private Integer proteinSum;
+    private Float proteinSum;
 
-    private Integer fatSum;
+    private Float fatSum;
 
     private Integer calorieSum;
 }

@@ -26,13 +26,13 @@ public class ProductDTO extends BaseDTO {
     private UnitOfMeasure unitOfMeasure;
 
     @NotBlank
-    private Byte carbohydrate;
+    private Float carbohydrate;
 
     @NotBlank
-    private Byte protein;
+    private Float protein;
 
     @NotBlank
-    private Byte fat;
+    private Float fat;
 
     @NotBlank
     private Short calorie;
