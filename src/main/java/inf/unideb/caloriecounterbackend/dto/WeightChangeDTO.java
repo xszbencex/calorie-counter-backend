@@ -1,9 +1,13 @@
 package inf.unideb.caloriecounterbackend.dto;
 
-import java.util.Date;
+import inf.unideb.caloriecounterbackend.configuration.LocalDateDeserializer;
+
+import java.time.LocalDate;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
+
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -19,7 +23,8 @@ public class WeightChangeDTO extends BaseDTO {
     private Float weight;
 
     @NotBlank
-    private Date setDate;
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    private LocalDate setDate;
 
     private String userId;
 }

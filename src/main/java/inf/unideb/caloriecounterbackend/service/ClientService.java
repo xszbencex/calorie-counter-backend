@@ -8,7 +8,7 @@ import inf.unideb.caloriecounterbackend.exception.ApplicationError;
 import inf.unideb.caloriecounterbackend.exception.ApplicationException;
 import inf.unideb.caloriecounterbackend.repository.ClientRepository;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +35,7 @@ public class ClientService extends BaseService<ClientDTO, Client> {
 
         final WeightChangeDTO weightChangeDTO = new WeightChangeDTO();
         weightChangeDTO.setWeight(client.getWeight());
-        weightChangeDTO.setSetDate(new Date());
+        weightChangeDTO.setSetDate(LocalDate.now());
         super.getWeightChangeService().createWeightChange(weightChangeDTO);
 
         return new Result<>(super.mapToDTO(this.clientRepository.save(client)));

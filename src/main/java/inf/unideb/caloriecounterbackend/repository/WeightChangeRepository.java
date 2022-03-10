@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface WeightChangeRepository extends JpaRepository<WeightChange, String> {
 
-    List<WeightChange> findAllByUserId(String userId);
+    List<WeightChange> findAllByUserIdOrderBySetDateAsc(String userId);
 
 }

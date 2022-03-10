@@ -1,6 +1,6 @@
 package inf.unideb.caloriecounterbackend.entity;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,8 +25,7 @@ public class WeightChange extends BaseEntity {
     private Float weight;
 
     @Column(name = "set_date", nullable = false)
-    @Temporal(TemporalType.DATE)
-    private Date setDate;
+    private LocalDate setDate;
 
     @Column(name = "user_id", nullable = false, updatable = false)
     private String userId;

@@ -1,8 +1,9 @@
 package inf.unideb.caloriecounterbackend.entity;
 
 import inf.unideb.caloriecounterbackend.dto.enums.Gender;
+import inf.unideb.caloriecounterbackend.dto.enums.PhysicalActivity;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
@@ -47,11 +48,17 @@ public class Client extends BaseEntity {
     @Column(name = "target_fat")
     private Short targetFat;
 
+    @Column(name = "target_water")
+    private Float targetWater;
+
     @Column(name = "birth_date", nullable = false)
-    @Temporal(TemporalType.DATE)
-    private Date birthDate;
+    private LocalDate birthDate;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "gender", nullable = false)
     private Gender gender;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "physical_activity", nullable = false)
+    private PhysicalActivity physicalActivity;
 }

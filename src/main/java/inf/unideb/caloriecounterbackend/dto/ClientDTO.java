@@ -1,12 +1,16 @@
 package inf.unideb.caloriecounterbackend.dto;
 
+import inf.unideb.caloriecounterbackend.configuration.LocalDateDeserializer;
 import inf.unideb.caloriecounterbackend.dto.enums.Gender;
+import inf.unideb.caloriecounterbackend.dto.enums.PhysicalActivity;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -35,10 +39,16 @@ public class ClientDTO extends BaseDTO {
 
     private Short targetFat;
 
+    private Float targetWater;
+
     @NotNull
-    private Date birthDate;
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    private LocalDate birthDate;
 
     @NotBlank
     private Gender gender;
+
+    @NotBlank
+    private PhysicalActivity physicalActivity;
 
 }

@@ -2,6 +2,7 @@ package inf.unideb.caloriecounterbackend.service;
 
 import inf.unideb.caloriecounterbackend.dto.ProductDTO;
 import inf.unideb.caloriecounterbackend.dto.Result;
+import inf.unideb.caloriecounterbackend.dto.enums.ProductType;
 import inf.unideb.caloriecounterbackend.entity.Product;
 import inf.unideb.caloriecounterbackend.exception.ApplicationError;
 import inf.unideb.caloriecounterbackend.exception.ApplicationException;
@@ -39,6 +40,10 @@ public class ProductService extends BaseService<ProductDTO, Product> {
 
     public Result<List<ProductDTO>> getAllProductByUserId(final String userId) {
         return new Result<>(super.mapEntityListToDTOList(this.productRepository.findAllByUserId(userId)));
+    }
+
+    public Result<List<ProductDTO>> getAllProductProductTypeAndByUserId(final ProductType productType, final String userId) {
+        return new Result<>(super.mapEntityListToDTOList(this.productRepository.findAllByProductTypeAndUserId(productType, userId)));
     }
 
     public Result<ProductDTO> getProductById(final String productId) {

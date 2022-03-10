@@ -1,6 +1,6 @@
 package inf.unideb.caloriecounterbackend.entity;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
@@ -9,8 +9,6 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -28,8 +26,7 @@ public class Nutrition extends BaseEntity {
     private String userId;
 
     @Column(name = "nutrition_date")
-    @Temporal(TemporalType.DATE)
-    private Date nutritionDate;
+    private LocalDate nutritionDate;
 
     @Column(name = "carbohydrate", columnDefinition = "smallint not null default 0")
     private Float carbohydrate;

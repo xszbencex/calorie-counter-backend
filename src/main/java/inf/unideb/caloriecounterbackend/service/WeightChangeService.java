@@ -42,7 +42,7 @@ public class WeightChangeService extends BaseService<WeightChangeDTO, WeightChan
     }
 
     public Result<List<WeightChangeDTO>> getAllWeightChangeByUserId(final String userId) {
-        return new Result<>(super.mapEntityListToDTOList(this.weightChangeRepository.findAllByUserId(userId)));
+        return new Result<>(super.mapEntityListToDTOList(this.weightChangeRepository.findAllByUserIdOrderBySetDateAsc(userId)));
     }
 
     public WeightChange getWeightChangeEntityById(final String weightChangeId) {

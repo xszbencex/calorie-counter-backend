@@ -1,12 +1,15 @@
 package inf.unideb.caloriecounterbackend.dto;
 
+import inf.unideb.caloriecounterbackend.configuration.LocalDateDeserializer;
 import inf.unideb.caloriecounterbackend.entity.Product;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -21,7 +24,8 @@ public class NutritionDTO extends BaseDTO {
     private String userId;
 
     @NotNull
-    private Date nutritionDate;
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    private LocalDate nutritionDate;
 
     @NotBlank
     private Float carbohydrate;

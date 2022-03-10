@@ -2,6 +2,7 @@ package inf.unideb.caloriecounterbackend.controller;
 
 import inf.unideb.caloriecounterbackend.dto.ProductDTO;
 import inf.unideb.caloriecounterbackend.dto.Result;
+import inf.unideb.caloriecounterbackend.dto.enums.ProductType;
 import inf.unideb.caloriecounterbackend.service.ProductService;
 
 import java.util.List;
@@ -37,6 +38,13 @@ public class ProductController {
     @GetMapping("/user/{userId}")
     public Result<List<ProductDTO>> getAllProductByUserId(@PathVariable final String userId) {
         return this.productService.getAllProductByUserId(userId);
+    }
+
+    @GetMapping("/type/{productType}/user/{userId}")
+    public Result<List<ProductDTO>> getAllProductByProductTypeAndUserId(
+            @PathVariable final ProductType productType,
+            @PathVariable final String userId) {
+        return this.productService.getAllProductProductTypeAndByUserId(productType, userId);
     }
 
     @GetMapping("/{productId}")
