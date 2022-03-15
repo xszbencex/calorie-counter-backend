@@ -65,9 +65,19 @@ public class ClientService extends BaseService<ClientDTO, Client> {
                     if (!updatedClient.getKeycloakId().equals(super.getUserUuid())) {
                         throw new ApplicationException(ApplicationError.notMatchingUserId());
                     }
+
+                    if (!clientDTO.getWeight().equals(updatedClient.getWeight())) {
+                        final WeightChangeDTO weightChangeDTO = new WeightChangeDTO();
+                        weightChangeDTO.setWeight(clientDTO.getWeight());
+                        weightChangeDTO.setSetDate(LocalDate.now());
+                        super.getWeightChangeService().createWeightChange(weightChangeDTO);
+                    }
+
                     clientDTO.setKeycloakId(updatedClient.getKeycloakId());
                     updatedClient = super.mapFromDTO(clientDTO);
                     updatedClient.setId(clientId);
+
+
                     return super.mapToDTO(this.clientRepository.save(updatedClient));
                 })
                 .map(Result::new)

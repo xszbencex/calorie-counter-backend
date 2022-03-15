@@ -19,6 +19,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ProductService extends BaseService<ProductDTO, Product> {
 
+    private static final String WATER_NAME = "Víz";
+    private static final String WATER_USER_ID = "EVERYONE";
+
     private ProductRepository productRepository;
 
     @Autowired
@@ -53,6 +56,10 @@ public class ProductService extends BaseService<ProductDTO, Product> {
                 .orElseGet(() -> Result.error(ApplicationError.entityNotFound(Product.class.getSimpleName(), productId)));
     }
 
+    public Result<ProductDTO> getWaterProduct() {
+        return new Result<>(this.mapToDTO(this.getWaterProductEntity()));
+    }
+
     public Result<ProductDTO> updateProduct(final ProductDTO productDTO, final String productId) {
         return this.productRepository.findById(productId)
                 .map(updatedProduct -> {
@@ -75,6 +82,11 @@ public class ProductService extends BaseService<ProductDTO, Product> {
         } else {
             return Result.error(ApplicationError.notMatchingUserId());
         }
+    }
+
+    public Product getWaterProductEntity() {
+        return this.productRepository.getByNameAndUserIdAndProductType(WATER_NAME, WATER_USER_ID, ProductType.WATER)
+                .orElseThrow(() -> new ApplicationException(ApplicationError.entityNotFound(Product.class.getSimpleName(), "Water")));
     }
 
 }

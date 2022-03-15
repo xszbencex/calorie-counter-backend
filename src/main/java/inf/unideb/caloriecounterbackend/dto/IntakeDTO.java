@@ -19,13 +19,13 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class NutritionDTO extends BaseDTO {
+public class IntakeDTO extends BaseDTO {
 
     private String userId;
 
     @NotNull
     @JsonDeserialize(using = LocalDateDeserializer.class)
-    private LocalDate nutritionDate;
+    private LocalDate intakeDate;
 
     @NotBlank
     private Float carbohydrate;

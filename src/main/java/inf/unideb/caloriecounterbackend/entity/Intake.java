@@ -18,15 +18,15 @@ import lombok.ToString;
 @Setter
 @ToString
 @Entity
-@Table(name = "nutrition")
+@Table(name = "intake")
 @Access(value = AccessType.FIELD)
-public class Nutrition extends BaseEntity {
+public class Intake extends BaseEntity {
 
     @Column(name = "user_id", nullable = false, updatable = false)
     private String userId;
 
-    @Column(name = "nutrition_date")
-    private LocalDate nutritionDate;
+    @Column(name = "intake_date")
+    private LocalDate intakeDate;
 
     @Column(name = "carbohydrate", columnDefinition = "smallint not null default 0")
     private Float carbohydrate;

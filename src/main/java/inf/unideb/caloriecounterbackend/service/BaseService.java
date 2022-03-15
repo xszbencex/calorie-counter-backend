@@ -34,7 +34,7 @@ public class BaseService<D extends BaseDTO, E extends BaseEntity> {
 
     private ClientService clientService;
 
-    private NutritionService nutritionService;
+    private IntakeService intakeService;
 
     private ProductService productService;
 
@@ -82,8 +82,8 @@ public class BaseService<D extends BaseDTO, E extends BaseEntity> {
     }
 
     @Autowired
-    public void setNutritionService(NutritionService nutritionService) {
-        this.nutritionService = nutritionService;
+    public void setIntakeService(IntakeService intakeService) {
+        this.intakeService = intakeService;
     }
 
     @Autowired

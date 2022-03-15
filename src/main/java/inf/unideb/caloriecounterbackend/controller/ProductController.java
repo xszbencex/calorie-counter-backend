@@ -53,6 +53,11 @@ public class ProductController {
         return this.productService.getProductById(productId);
     }
 
+    @GetMapping("/water")
+    public Result<ProductDTO> getWaterProduct() {
+        return this.productService.getWaterProduct();
+    }
+
     @PostMapping
     public Result<ProductDTO> createProduct(
             @Valid @RequestBody final ProductDTO productDTO) {

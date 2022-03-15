@@ -12,9 +12,9 @@ import lombok.ToString;
 @Setter
 @ToString
 @Valid
-public class NutritionSumResponse {
+public class IntakeSumResponse {
 
-    private LocalDate nutritionDate;
+    private LocalDate intakeDate;
 
     private Float carbohydrateSum;
 

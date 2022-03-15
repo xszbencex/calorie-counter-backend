@@ -18,7 +18,7 @@ server:
 
 keycloak:
   auth-server-url: http://localhost:8080/auth
-  realm: MAG
+  realm: CC
   resource: login
   public-client: true
 
