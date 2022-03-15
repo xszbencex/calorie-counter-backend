@@ -1,6 +1,7 @@
 package inf.unideb.caloriecounterbackend.entity;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
@@ -26,7 +27,7 @@ public class Intake extends BaseEntity {
     private String userId;
 
     @Column(name = "intake_date")
-    private LocalDate intakeDate;
+    private LocalDateTime intakeDate;
 
     @Column(name = "carbohydrate", columnDefinition = "smallint not null default 0")
     private Float carbohydrate;

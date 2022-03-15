@@ -65,7 +65,8 @@ public class IntakeService extends BaseService<IntakeDTO, Intake> {
 
     public Result<List<IntakeDTO>> getAllIntakeByDateAndUserId(final LocalDate intakeDate) {
         return new Result<>(super.mapEntityListToDTOList(
-                this.intakeRepository.findAllByIntakeDateAndUserId(intakeDate, super.getUserUuid()))
+                this.intakeRepository.findAllByIntakeDateGreaterThanEqualAndIntakeDateLessThanAndUserId(
+                        intakeDate.atStartOfDay(), intakeDate.plusDays(1).atStartOfDay(), super.getUserUuid()))
         );
     }
 
@@ -77,7 +78,8 @@ public class IntakeService extends BaseService<IntakeDTO, Intake> {
     }
 
     public Result<IntakeSumResponse> getIntakeSumByDate(final LocalDate intakeDate) {
-        final List<Intake> intakeList = this.intakeRepository.findAllByIntakeDateAndUserId(intakeDate, super.getUserUuid());
+        final List<Intake> intakeList = this.intakeRepository.findAllByIntakeDateGreaterThanEqualAndIntakeDateLessThanAndUserId(
+                intakeDate.atStartOfDay(), intakeDate.plusDays(1).atStartOfDay(), super.getUserUuid());
         return new Result<>(this.constructIntakeSumResponse(intakeDate, intakeList));
     }
 

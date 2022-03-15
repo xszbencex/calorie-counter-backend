@@ -1,8 +1,10 @@
 package inf.unideb.caloriecounterbackend.dto.request;
 
 import inf.unideb.caloriecounterbackend.configuration.LocalDateDeserializer;
+import inf.unideb.caloriecounterbackend.configuration.LocalDateTimeDeserializer;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.validation.Valid;
 
@@ -18,8 +20,8 @@ import lombok.ToString;
 @Valid
 public class WaterIntakeRequest {
 
-    @JsonDeserialize(using = LocalDateDeserializer.class)
-    private LocalDate intakeDate;
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    private LocalDateTime intakeDate;
 
     private Short quantity;
 
