@@ -32,7 +32,7 @@ public class BaseService<D extends BaseDTO, E extends BaseEntity> {
 
     private ModelMapper modelMapper;
 
-    private ClientService clientService;
+    private PersonalDataService personalDataService;
 
     private IntakeService intakeService;
 
@@ -77,8 +77,8 @@ public class BaseService<D extends BaseDTO, E extends BaseEntity> {
     }
 
     @Autowired
-    public void setClientService(ClientService clientService) {
-        this.clientService = clientService;
+    public void setPersonalDataService(PersonalDataService personalDataService) {
+        this.personalDataService = personalDataService;
     }
 
     @Autowired

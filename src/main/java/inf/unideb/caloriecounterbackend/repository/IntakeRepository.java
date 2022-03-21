@@ -2,7 +2,6 @@ package inf.unideb.caloriecounterbackend.repository;
 
 import inf.unideb.caloriecounterbackend.entity.Intake;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 

@@ -1,6 +1,6 @@
 package inf.unideb.caloriecounterbackend.repository;
 
-import inf.unideb.caloriecounterbackend.entity.Client;
+import inf.unideb.caloriecounterbackend.entity.DailyTarget;
 
 import java.util.Optional;
 
@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ClientRepository extends JpaRepository<Client, String> {
+public interface DailyTargetRepository extends JpaRepository<DailyTarget, String> {
 
-    Optional<Client> findClientByKeycloakId(String userId);
+    Optional<DailyTarget> findByUserId(String userId);
 }
