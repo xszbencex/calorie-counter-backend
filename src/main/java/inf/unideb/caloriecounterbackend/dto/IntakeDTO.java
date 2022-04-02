@@ -1,10 +1,8 @@
 package inf.unideb.caloriecounterbackend.dto;
 
-import inf.unideb.caloriecounterbackend.configuration.LocalDateDeserializer;
 import inf.unideb.caloriecounterbackend.configuration.LocalDateTimeDeserializer;
 import inf.unideb.caloriecounterbackend.entity.Product;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import javax.validation.Valid;

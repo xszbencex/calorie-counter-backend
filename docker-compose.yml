@@ -15,6 +15,7 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: admin
       PGDATA: /var/lib/postgresql/data/pgdata
+      TZ: "Europe/Budapest"
 
   keycloak:
     container_name: cc-keycloak
@@ -28,7 +29,28 @@ services:
       DB_PASSWORD: admin
       KEYCLOAK_USER: admin
       KEYCLOAK_PASSWORD: admin
+      TZ: "Europe/Budapest"
     ports:
       - 8080:8080
     depends_on:
       - postgres
+
+  calorie-counter-backend:
+    image: calorie-counter-backend
+    container_name: cc-backend
+    environment:
+      TZ: "Europe/Budapest"
+    depends_on:
+      - postgres
+    ports:
+      - 8081:8081
+
+  calorie-counter-frontend:
+    image: calorie-counter-frontend
+    container_name: cc-frontend
+    environment:
+      TZ: "Europe/Budapest"
+    depends_on:
+      - postgres
+    ports:
+      - 3000:3000
