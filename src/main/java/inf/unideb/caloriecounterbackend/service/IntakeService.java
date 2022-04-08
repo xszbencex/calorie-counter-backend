@@ -26,10 +26,13 @@ public class IntakeService extends BaseService<IntakeDTO, Intake> {
 
     private IntakeRepository intakeRepository;
 
+    private ProductService productService;
+
     @Autowired
-    public IntakeService(final IntakeRepository intakeRepository) {
+    public IntakeService(final IntakeRepository intakeRepository, final ProductService productService) {
         super(IntakeDTO.class, Intake.class);
         this.intakeRepository = intakeRepository;
+        this.productService = productService;
     }
 
     public Result<IntakeDTO> createIntake(final IntakeDTO intakeDTO) {
@@ -40,7 +43,7 @@ public class IntakeService extends BaseService<IntakeDTO, Intake> {
     }
 
     public Result<IntakeDTO> createWaterIntake(final WaterIntakeRequest waterIntakeRequest) {
-        final Product water = super.getProductService().getWaterProductEntity();
+        final Product water = this.productService.getWaterProductEntity();
         final Intake intake = new Intake();
         intake.setProduct(water);
         intake.setIntakeDate(waterIntakeRequest.getIntakeDate());

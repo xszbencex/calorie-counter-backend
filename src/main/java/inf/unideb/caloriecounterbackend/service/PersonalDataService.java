@@ -22,10 +22,13 @@ public class PersonalDataService extends BaseService<PersonalDataDTO, PersonalDa
 
     private PersonalDataRepository personalDataRepository;
 
+    private WeightChangeService weightChangeService;
+
     @Autowired
-    public PersonalDataService(final PersonalDataRepository personalDataRepository) {
+    public PersonalDataService(final PersonalDataRepository personalDataRepository, final WeightChangeService weightChangeService) {
         super(PersonalDataDTO.class, PersonalData.class);
         this.personalDataRepository = personalDataRepository;
+        this.weightChangeService = weightChangeService;
     }
 
     public Result<PersonalDataDTO> createPersonalData(final PersonalDataDTO personalDataDTO) {
@@ -36,7 +39,7 @@ public class PersonalDataService extends BaseService<PersonalDataDTO, PersonalDa
         final WeightChangeDTO weightChangeDTO = new WeightChangeDTO();
         weightChangeDTO.setWeight(personalData.getWeight());
         weightChangeDTO.setSetDate(LocalDate.now());
-        super.getWeightChangeService().createWeightChange(weightChangeDTO);
+        this.weightChangeService.createWeightChange(weightChangeDTO);
 
         return new Result<>(super.mapToDTO(this.personalDataRepository.save(personalData)));
     }
@@ -70,7 +73,7 @@ public class PersonalDataService extends BaseService<PersonalDataDTO, PersonalDa
                         final WeightChangeDTO weightChangeDTO = new WeightChangeDTO();
                         weightChangeDTO.setWeight(personalDataDTO.getWeight());
                         weightChangeDTO.setSetDate(LocalDate.now());
-                        super.getWeightChangeService().createWeightChange(weightChangeDTO);
+                        this.weightChangeService.createWeightChange(weightChangeDTO);
                     }
 
                     personalDataDTO.setUserId(updatedPersonalData.getUserId());
